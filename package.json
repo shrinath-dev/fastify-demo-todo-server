@@ -8,19 +8,28 @@
     "test": "test"
   },
   "scripts": {
+    "mongo:stop": "docker container stop fastify-mongo",
+    "mongo:start": "docker run -d -p 27017:27017 --rm --name fastify-mongo mongo:latest",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
     "test": "node --test test/**/*.test.js",
-    "start": "fastify start -l info app.js",
-    "dev": "fastify start -w -l info -P app.js"
+    "start": "fastify start app.js",
+    "dev": "fastify start -w -l info -P  app.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "fastify": "^5.0.0",
-    "fastify-plugin": "^5.0.0",
     "@fastify/autoload": "^6.0.0",
+    "@fastify/cors": "^11.3.0",
+    "@fastify/env": "^7.0.0",
+    "@fastify/mongodb": "^10.0.0",
     "@fastify/sensible": "^6.0.0",
-    "fastify-cli": "^8.0.0"
+    "@fastify/swagger": "^9.8.1",
+    "fastify": "^5.0.0",
+    "fastify-cli": "^8.0.0",
+    "fastify-plugin": "^5.0.0",
+    "standard": "^17.1.2"
   },
   "devDependencies": {
     "c8": "^11.0.0"
