@@ -46,4 +46,5 @@ export default async function (fastify, opts) {
     cascadeHooks: true,
     options: Object.assign({}, opts)
   })
+
 }

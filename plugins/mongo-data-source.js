@@ -9,4 +9,4 @@ async function mongodbPlugin(fastify, opts) {
 };
 
 
-export default fastifyPlugin(mongodbPlugin)
+export default fastifyPlugin(mongodbPlugin, {name: 'mongodb'})

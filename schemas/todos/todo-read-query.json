@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "$id": "schema:todo:read:query",
+  "additionalProperties":false,
+  "required": ["id"],
+  "properties":{
+    "id": {
+      "type": "string"
+    }
+  }
+}

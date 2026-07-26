@@ -1,0 +1,11 @@
+{
+  "$id": "schema:todo:create:body",
+  "type": "object",
+  "required": ["title"],
+  "additionalProperties": false,
+  "properties": {
+    "title":{
+      "type":"string"
+    }
+  }
+}
