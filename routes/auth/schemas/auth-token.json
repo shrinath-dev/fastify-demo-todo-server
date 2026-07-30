@@ -1,0 +1,11 @@
+{
+  "type": "object",
+  "$id": "schema:auth:token",
+  "additionalProperties": false,
+  "required": ["token"],
+  "properties": {
+    "token" : {
+      "type": "string"
+    }
+  }
+}

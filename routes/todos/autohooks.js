@@ -2,102 +2,88 @@ import fastifyPlugin from "fastify-plugin";
 
 
 async function todoAutohooks(fastify, opts) {
-
+  fastify.addHook('onRequest', fastify.authenticate)
   const todos = await fastify.mongo.db.collection('todos');
+  fastify.decorateRequest('todosDatasource', null);
 
-  fastify.decorate('mongoDataSource', {
-    async createTodo({ title }) {
+  fastify.addHook('onRequest', async (request, reply) => {
 
-      const _id = new fastify.mongo.ObjectId();
-      const now = new Date()
-      const { insertedId } = await todos.insertOne({
-        _id,
-        id: _id,
-        title,
-        done: false,
-        createAt: now,
-        modifiedAt: now
-      })
+    request.todosDatasource = {
+      async createTodo({ title }) {
+        const _id = new fastify.mongo.ObjectId();
+        const now = new Date()
+        const userId = request.user.id;
+        const { insertedId } = await todos.insertOne({
+          _id,
+          id: _id,
+          title,
+          userId,
+          done: false,
+          createAt: now,
+          modifiedAt: now
+        })
 
-      return insertedId;
-    },
+        return insertedId;
+      },
 
+      async countTodos(filter = {}) {
+        filter.userId = request.user.id;
+        const count = await todos.countDocuments(filter);
+        return count;
+      },
 
-    async listTodos({ title, skip, limit }) {
+      async listTodos({ filter = {}, projection = {}, limit = 50, skip = 0, asStream = false } = {}) {
+        if (filter.title) {
+          filter.title = new RegExp(filter.title)
+        } else {
+          delete filter.title
+        }
 
-      const filter = title ? { title: new RegExp(title, 'i') } : {};
+        filter.userId = request.user.id;
 
-      const data = await todos.find(filter, {
-        skip,
-        limit
-      }).toArray();
+        const cursor = todos.find(filter, {
+          projection: { ...projection, _id: 0 },
+          limit,
+          skip,
+        })
 
-      const totalCount = await todos.countDocuments(filter)
+        if (asStream) {
+          return cursor.stream();
+        }
 
-      return { data, totalCount };
-    },
+        return cursor.toArray();
+      },
 
+      async readTodo(id, projection = {}) {
+        const todo = await todos.findOne({ _id: new fastify.mongo.ObjectId(id), userId: request.user.id },
+          {projection: {...projection, _id: 0}})
 
-    async readTodo(id) {
+        return todo;
+      },
 
-      const todo = await todos.findOne(
-        { _id: new fastify.mongo.ObjectId(id) },
-        {projection: {_id: 0}}
-      )
+      async updateTodo(id, data) {
+        const newTodo = await todos.updateOne(
+          { _id: new fastify.mongo.ObjectId(id), userId: request.user.id },
+          {
+            $set: {
+              ...data,
+              modifiedAt: new Date(),
+            }
+          }
+        )
 
-      return todo;
-    },
+        return newTodo;
+      },
 
+      async deleteTodo(id) {
+        const result = await todos.deleteOne(
+          { _id: new fastify.mongo.ObjectId(id), userId: request.user.id }
+        )
 
-    async updateTodo(id, data) {
-
-      const result = await todos.updateOne(
-        { _id: new fastify.mongo.ObjectId(id) },
-        {
-          $set: {
-            ...data,
-            modifiedAt: new Date()
-        }}
-      )
-
-      if (result.modifiedCount === 0) {
-        return false
+        return result;
       }
-
-      return true
-    },
-
-
-    async deleteTodo(id) {
-
-      const result = await todos.deleteOne(
-        { _id: new fastify.mongo.ObjectId(id) }
-      )
-
-      if (result.deletedCount === 0) {
-        return false
-      }
-      return true;
-    },
-
-
-    // async changeStatus(id, done) {
-
-    //   const result = await todos.updateOne(
-    //     { _id: new fastify.mongo.ObjectId(id) },
-    //     {
-    //       $set: {
-    //         done,
-    //         modifiedAt: new Date(),
-    //     }}
-    //   )
-
-    //   if (result.modifiedCount === 0) {
-    //     return false
-    //   }
-    //   return true;
-    // }
-  })
+    }
+  } )
 }
 
-export default fastifyPlugin(todoAutohooks, {encapsulate: true, name: 'todo-store', dependencies:['mongodb']})
+export default fastifyPlugin(todoAutohooks, {encapsulate: true, name: 'todo-store', dependencies:['mongodb', 'authentication-plugin']})

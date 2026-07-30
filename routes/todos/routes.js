@@ -20,7 +20,6 @@ modifiedAt: Date, // [6]
  */
 export default async function todoRoutes(fastify, _opts) {
 
-  const todos = fastify.mongo.db.collection('todos');
 
 
   fastify.route({
@@ -36,9 +35,10 @@ export default async function todoRoutes(fastify, _opts) {
 
       const { title, skip, limit } = request.query;
 
-      const { data, totalCount } = await this.mongoDataSource.listTodos({ title, skip, limit })
+      const todos = await request.todosDatasource.listTodos({ filter: { title }, limit, skip })
+      const totalCount = await request.todosDatasource.countTodos();
       reply.code(200);
-      return { data, totalCount };
+      return { data: todos, totalCount };
 
     }
   })
@@ -53,7 +53,7 @@ export default async function todoRoutes(fastify, _opts) {
     },
     url: '/',
     handler: async function createTodo(request, reply) {
-      const insertedId = await this.mongoDataSource.createTodo(request.body);
+      const insertedId = await request.todosDatasource.createTodo(request.body);
       reply.code(201);
       return { id: insertedId };
     }
@@ -70,7 +70,7 @@ export default async function todoRoutes(fastify, _opts) {
     },
     url: '/:id',
     handler: async function readTodo(request, reply) {
-      const todo = await this.mongoDataSource.readTodo(request.params.id );
+      const todo = await request.todosDatasource.readTodo(request.params.id );
       if (!todo) {
         reply.code(404)
         return { error: "todo not found" }
@@ -90,7 +90,7 @@ export default async function todoRoutes(fastify, _opts) {
     url: '/:id',
     handler: async function updateTodo(request, reply) {
 
-      const result = await this.mongoDataSource.updateTodo(request.params.id, request.body)
+      const result = await request.todosDatasource.updateTodo(request.params.id, request.body)
       if (!result) {
         reply.code(404)
         return { error: 'todo not found' }

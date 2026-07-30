@@ -16,4 +16,4 @@ async function configLoader(fastify, opts) {
   })
 }
 
-export default fastifyPlugin(configLoader)
+export default fastifyPlugin(configLoader, { name: "app-config"})
