@@ -19,11 +19,30 @@ async function todoAutohooks(fastify, opts) {
           title,
           userId,
           done: false,
-          createAt: now,
+          createdAt: now,
           modifiedAt: now
         })
 
         return insertedId;
+      },
+
+      async createTodos(todosList) {
+        const now = new Date();
+        const userId = request.user.id;
+        const toInsert = todosList.map(rawTodo => {
+          const _id = new fastify.mongo.ObjectId()
+          return {
+            _id,
+            userId,
+            ...rawTodo,
+            id: _id,
+            createdAt: now,
+            modifiedAt: now,
+          }
+        })
+
+        await todos.insertMany(toInsert);
+        return toInsert.map(todo =>{ return { id: todo._id }});
       },
 
       async countTodos(filter = {}) {

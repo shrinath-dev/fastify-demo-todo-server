@@ -10,6 +10,7 @@ import fastifyPlugin from 'fastify-plugin'
 import todoCreateResponse from './todos/todo-create-response.json' with {type: 'json'};
 import todoReadQuery from './todos/todo-read-query.json' with {type: 'json'};
 import todoUpdateQueryBody from './todos/todo-update-query-body.json' with {type: 'json'};
+import todoCreateImportFileBody from './todos/create-todo-import-file.json' with {type: 'json'}
 
 async function loader(fastify, opts) {
   fastify.addSchema(dotenv)
@@ -23,6 +24,7 @@ async function loader(fastify, opts) {
   fastify.addSchema(todoListResponse);
   fastify.addSchema(todoReadQuery);
   fastify.addSchema(todoUpdateQueryBody);
+  fastify.addSchema(todoCreateImportFileBody);
 }
 
 export default fastifyPlugin(loader);

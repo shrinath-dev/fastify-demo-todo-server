@@ -1,0 +1,23 @@
+{
+  "type": "object",
+  "$id": "schema:todo:import:file:body",
+  "additionalProperties": false,
+  "required": ["todoListFile"],
+  "properties": {
+    "todoListFile": {
+      "type": "object",
+
+      "$ref": "schema:todo:import:file",
+      "properties":{
+        "value": {
+          "type": "array",
+          "required": ["title", "done"],
+          "properties": {
+            "title":{"type": "string"},
+            "done": {"type": "boolean"}
+          }
+        }
+      }
+    }
+  }
+}
