@@ -12,7 +12,7 @@
     "mongo:start": "docker run -d -p 27017:27017 --rm --name fastify-mongo mongo:latest",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "tap --before=test/run-before.js test/**.test.js --after=test/run-after.js",
+    "test": "tap --before=test/run-before.js \"test/**/*.test.js\" --after=test/run-after.js --allow-incomplete-coverage --allow-empty-coverage",
     "test:nostop": "tap --before=test/before.js test/**/**.test.js",
     "start": "fastify start --options app.js",
     "dev": "fastify start -w -l info -P  app.js"

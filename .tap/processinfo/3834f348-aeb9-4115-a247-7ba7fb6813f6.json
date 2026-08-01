@@ -1,8 +1,8 @@
 {
-  "date": "2026-08-01T17:22:55.219Z",
+  "date": "2026-08-01T17:54:19.461Z",
   "argv": [
     "/Users/shrinath-dev/.nvm/versions/node/v24.16.0/bin/node",
-    "/Users/shrinath-dev/Learn/backend-projects/my-server/test/basic.test.js"
+    "/Users/shrinath-dev/Learn/backend-projects/my-server/test/login.test.js"
   ],
   "execArgv": [
     "--import=file:///Users/shrinath-dev/Learn/backend-projects/my-server/node_modules/@tapjs/typescript/dist/esm/import.mjs",
@@ -12,12 +12,12 @@
   ],
   "NODE_OPTIONS": "\"--import=file:///Users/shrinath-dev/Learn/backend-projects/my-server/node_modules/@tapjs/processinfo/dist/esm/import.mjs\"",
   "cwd": "/Users/shrinath-dev/Learn/backend-projects/my-server",
-  "pid": 38954,
-  "ppid": 38946,
+  "pid": 40422,
+  "ppid": 40412,
   "parent": null,
-  "uuid": "758ae964-9b47-416a-8e29-8aadcc36b3ee",
+  "uuid": "3834f348-aeb9-4115-a247-7ba7fb6813f6",
   "files": [
-    "/Users/shrinath-dev/Learn/backend-projects/my-server/test/basic.test.js",
+    "/Users/shrinath-dev/Learn/backend-projects/my-server/test/login.test.js",
     "/Users/shrinath-dev/Learn/backend-projects/my-server/test/run-before.js",
     "/Users/shrinath-dev/Learn/backend-projects/my-server/test/run-after.js",
     "/Users/shrinath-dev/Learn/backend-projects/my-server/node_modules/@tapjs/typescript/dist/esm/import.mjs",
@@ -2269,11 +2269,11 @@
       "/Users/shrinath-dev/Learn/backend-projects/my-server/node_modules/cookie/src/index.ts"
     ]
   },
-  "root": "758ae964-9b47-416a-8e29-8aadcc36b3ee",
-  "externalID": "test/basic.test.js",
+  "root": "3834f348-aeb9-4115-a247-7ba7fb6813f6",
+  "externalID": "test/login.test.js",
   "code": 0,
   "signal": null,
-  "runtime": 8214.540958,
+  "runtime": 1020.855,
   "globalsAdded": [
     "allowedDriverRequire"
   ]
