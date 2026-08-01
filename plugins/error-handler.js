@@ -6,15 +6,14 @@ async function errorHandler(fastify, opts) {
 
     if (reply.statusCode >= 500) {
 
-      req.log.error({ req, res: reply, err: err }, err?.message);
-      reply.send(`fatal error please contact support team, ID: ${req.id}`)
-
-      return;
+      req.log.error({ req, res: reply, err }, err?.message)
+      const error = new Error(`Fatal error. Contact the support team with the id ${req.id}`)
+      reply.send(error)
+      return
     }
 
     req.log.info({ req, res: reply, err: err }, err?.message);
     reply.send(err);
-    return;
   })
 }
 

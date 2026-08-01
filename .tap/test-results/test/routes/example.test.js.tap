@@ -1,0 +1,26 @@
+[31m✖ example is loaded [90m(347.271667ms)[39m[39m
+[34mℹ tests 1[39m
+[34mℹ suites 0[39m
+[34mℹ pass 0[39m
+[34mℹ fail 1[39m
+[34mℹ cancelled 0[39m
+[34mℹ skipped 0[39m
+[34mℹ todo 0[39m
+[34mℹ duration_ms 349.135416[39m
+
+[31m✖ failing tests:[39m
+
+test at test/routes/example.test.js:5:1
+[31m✖ example is loaded [90m(347.271667ms)[39m[39m
+  AssertionError [ERR_ASSERTION]: '{"message":"Route GET:/example not found","error":"Not Found","statusCode":404}' == 'this is an example'
+      at TestContext.<anonymous> [90m(file:///Users/shrinath-dev/Learn/backend-projects/my-server/[39mtest/routes/example.test.js:11:10[90m)[39m
+  [90m    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)[39m
+  [90m    at async Test.run (node:internal/test_runner/test:1313:7)[39m
+  [90m    at async startSubtestAfterBootstrap (node:internal/test_runner/harness:385:3)[39m {
+    generatedMessage: [33mtrue[39m,
+    code: [32m'ERR_ASSERTION'[39m,
+    actual: [32m'{"message":"Route GET:/example not found","error":"Not Found","statusCode":404}'[39m,
+    expected: [32m'this is an example'[39m,
+    operator: [32m'=='[39m,
+    diff: [32m'simple'[39m
+  }

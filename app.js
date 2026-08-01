@@ -21,7 +21,9 @@ export default async function (fastify, opts) {
 
 
   // this load the config manually we created for mongo
-  await fastify.register(configLoader);
+  await fastify.register(configLoader, {
+    ...opts
+  });
 
   // Do not touch the following lines
 

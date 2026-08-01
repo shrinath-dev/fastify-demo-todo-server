@@ -1,0 +1,28 @@
+TAP version 14
+# Subtest: the application should start
+    ok 1 - the application is ready
+    1..1
+ok 1 - the application should start # time=354.773ms
+
+# Subtest: the alive routes are online.
+    ok 1 - should be equivalent
+    1..1
+ok 2 - the alive routes are online. # time=30.898ms
+
+# Subtest: the application should not start
+    # Subtest: if there are missing env vars
+        ok 1 - error must be set
+        ok 2 - should match pattern
+        1..2
+    ok 1 - if there are missing env vars # time=6.301ms
+    
+    # Subtest: when mongodb is unreachable
+        ok 1 - error must be set
+        ok 2 - should match pattern
+        1..2
+    ok 2 - when mongodb is unreachable # time=7508.908ms
+    
+    1..2
+ok 3 - the application should not start # time=7516.322ms
+
+1..3
